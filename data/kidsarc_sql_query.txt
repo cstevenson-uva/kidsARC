@@ -1,0 +1,1 @@
+SELECT `user`.age, `kidsarc`.* FROM `kidsarc`, `user` WHERE `user`.`age` < 100 AND `kidsarc`.`saveitem_timestamp` > '2023-12-09 10:00:00';
