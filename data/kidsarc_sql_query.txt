@@ -1,1 +1,3 @@
-SELECT `user`.age, `kidsarc`.* FROM `kidsarc`, `user` WHERE `user`.`age` < 100 AND `kidsarc`.`saveitem_timestamp` > '2023-12-09 10:00:00';
+SELECT `user`.age, `user`.created_timestamp, `kidsarc`.* FROM `kidsarc`, `user` WHERE `user`.`age` < 100 AND `kidsarc`.`saveitem_timestamp` > '2023-12-09 10:00:00' AND `kidsarc`.`saveitem_timestamp` < '2023-12-10 18:00:00' AND `user`.user_id = `kidsarc`.participant_fk;
+
+SELECT `user`.age, `user`.created_timestamp, `kidsarc`.* FROM `kidsarc`, `user` WHERE `user`.`age` < 100 AND `kidsarc`.`saveitem_timestamp` > '2023-12-09 10:00:00' AND `kidsarc`.`saveitem_timestamp` < '2023-12-10 18:00:00' AND `user`.user_id = `kidsarc`.participant_fk;
