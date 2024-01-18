@@ -5,7 +5,6 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 from LLM_data_preprocess import *
-from helper_functions import *
 
 
 simple_arc_df, adult_arc_df = df[df['itemid'] < 9], df[df['itemid'] > 8]
@@ -163,15 +162,16 @@ def get_incorrect_responses(df):
 def plot_responses_ind(df, model_name, dpi=120):
 
     df = df[df['model'] == model_name]
+    items = sorted(df['itemid'].to_list())
 
     cmap, norm = color_pallette()
     fig, axs = plt.subplots(8, 1, figsize=(1, 8), dpi=dpi)
-    #fig.subplots_adjust(left=0.01, right=0.99, top=0.80, bottom=0.01, wspace=1, hspace=0.1)
+    fig.subplots_adjust(left=0.38,bottom=0.15)
     axs = axs.flatten()
     
     for i, (index, row) in enumerate(df.iterrows()):
         mat = human_response_to_array(row['response'])
-        ax = axs[i] if len(df) > 1 else axs  # Single subplot does not need indexing
+        ax = axs[i]
         ax.imshow(mat, cmap=cmap, norm=norm)
         ax.grid(True, which='both', color='white', linewidth=0.5)
         ax.set_yticks([x-0.5 for x in range(1 + len(mat))])
@@ -181,20 +181,26 @@ def plot_responses_ind(df, model_name, dpi=120):
         ax.tick_params(axis='both', which='both', length=0)
     
     # Add a secondary axes for annotations
-    sec_ax = fig.add_axes([0.1, 0.21, 0.2, 0.62])  
-    sec_ax.set_ylim(items[0], items[-1])
-    for spine in sec_ax.spines.values():
-        spine.set_visible(False)
+    sec_ax = fig.add_axes([0.1, 0.21, 0.5, 0.7])  
+    #sec_ax.set_ylim(items[0], items[-1])
+    # for spine in sec_ax.spines.values():
+    #     spine.set_visible(False)
     sec_ax.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
     sec_ax.tick_params(axis='y', which='both', left=False, right=False, labelleft=False)
     sec_ax.set_ylabel('Task')
     sec_ax.yaxis.set_label_coords(-0.15, 0.5)
 
+    for ax, item in zip(axs, items):
+        task = plot_task(item)[50:500, 200:2200, :]
+        imagebox = OffsetImage(task, zoom=0.1)
+        xy = (0.0, 0.5)  # Center in the secondary axes
+        ab = AnnotationBbox(imagebox, xy, frameon=False, xycoords='data', boxcoords=("axes fraction", "data"))
+        sec_ax.add_artist(ab)
+
     #plt.tight_layout()
     plt.show()
 
 plot_responses_ind(simple_arc_df, 'NousResearch/Nous-Hermes-Llama2-70b')
-
 
 plot_performance_errors(simple_arc_df, get_incorrect_responses(simple_arc_df), 'Simple Arc Model', save=True)
 plot_performance_errors(adult_arc_df, get_incorrect_responses(adult_arc_df), 'Adult Arc Model', save=True)

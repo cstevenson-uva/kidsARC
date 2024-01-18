@@ -72,6 +72,24 @@ for i in range(len(df)):
         df.loc[i, 'correct'] = int(np.array_equal(np.array([int(x) for x in df['response'][i]]), task_to_array(df['itemid'][i])))
 
 
+### If a model response doesn't match the dimensions of the task, set to NA
+count = 0
+for i in range(len(df)):
+    if type(df['response'][i]) == float:
+        continue
+    if len(response_to_array(df['response'][i])) != len(task_to_array(df['itemid'][i])):
+        df.loc[i, 'response'] = 'NA'
+        print(model, df['itemid'][i])
+        count += 1
 
+'''
+zero-one-ai/Yi-34B-Chat 9
+zero-one-ai/Yi-34B-Chat 14
+zero-one-ai/Yi-34B-Chat 10
+zero-one-ai/Yi-34B-Chat 13
+'''
+
+### to CSV
+df.to_csv('data/model/models.csv', index=False)
 
 
