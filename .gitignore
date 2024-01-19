@@ -12,4 +12,6 @@ data/human/kidsarc_sql_query.txt
 aggregate_analysis_old.py
 incorrect_responses_to_code.py
 model_analysis.py
-model_analysis.py
+.DS_Store
+data/.DS_Store
+
