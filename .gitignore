@@ -1,0 +1,18 @@
+
+data/human/kidsarc_rows_0-499999.csv
+data/human/kidsarc_rows_1000000-1499999.csv
+data/human/kidsarc_rows_1500000-1999999.csv
+data/human/kidsarc_rows_2000000-2499999.csv
+data/human/kidsarc_rows_2500000-2999999.csv
+data/human/kidsarc_rows_3000000-3499999.csv
+data/human/kidsarc_rows_3500000-3999999.csv
+data/human/kidsarc_rows_4000000-4204984.csv
+data/human/kidsarc_rows_500000-999999.csv
+data/human/kidsarc_sql_query.txt
+aggregate_analysis_old.py
+incorrect_responses_to_code.py
+extra_analyses.py
+model_analysis.py
+LLMs 2.py
+**/.DS_Store
+**/__pycache__/
